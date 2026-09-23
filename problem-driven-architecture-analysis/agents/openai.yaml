@@ -1,0 +1,4 @@
+interface:
+  display_name: "Problem-Driven Architecture Analysis"
+  short_description: "Discover project goals and compare architecture routes"
+  default_prompt: "Use $problem-driven-architecture-analysis to discover this project's goals and produce a problem-driven architecture analysis."
