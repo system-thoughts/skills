@@ -1,9 +1,12 @@
 ---
 name: problem-driven-architecture-analysis
 description: "Analyze an existing software project through Problem-Driven Architecture Analysis: discover its goals and problem spaces, reconstruct baseline chains, derive solution routes, locate the project's contributions, compare alternatives and combinations, and explain What, Who, When, How much, and How with evidence. Use when a user wants to understand what a repository is trying to achieve, compare architectural solutions, or produce a durable project and ecosystem analysis. Do not use for ordinary code review, bug diagnosis, or feature implementation."
+compatibility: "Works with agents that support the Agent Skills format. Requires repository-reading tools; current external research requires web search or an equivalent source-research tool."
 ---
 
 # Problem-Driven Architecture Analysis
+
+Use the host agent's available repository-reading and source-research tools; this workflow does not depend on a vendor-specific tool name. If external research tools are unavailable, state that evidence boundary and keep claims within the accessible repository and supplied sources.
 
 Start from the project and reason backward to the problems it exists to solve. A goal names an observable outcome; a problem names the causal system chain that prevents it. Discover candidate goals first, reconstruct the baseline, then confirm each goal's pain location and problem grouping. Goals in one problem may have different success measures.
 
