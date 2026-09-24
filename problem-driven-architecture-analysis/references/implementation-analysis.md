@@ -39,13 +39,13 @@ How much is complete when every acceptance measure and slot-level quality obliga
 
 ## 2. How — from architecture choices to implementation
 
-Explain how the selected route becomes a working system. Begin with the project's responsibility split and dependencies, then follow representative uses into the decisions, state, and code that produce outcomes. Choose sections and views to fit the project; the questions below are an explanation contract, not a fixed report outline.
+Explain how the project's realized routes become a working system. Begin with its responsibility split and dependencies, then follow representative uses into the decisions, state, and code that produce outcomes. Choose sections and views to fit the project; the questions below are an explanation contract, not a fixed report outline.
 
 When several problem spaces reuse implementation, open How with a compact table of shared mechanisms, reused modules, scenario-specific adapters or policies, and the point where the paths diverge. Omit this table for a single problem or when reuse is not material. Keep route and competitor comparison in the problem documents; this table explains implementation reuse.
 
 ### What architectural choices realize the route?
 
-Show the system boundary, principal runtime or module responsibilities, dependencies, interfaces, and the reasons for the chosen split. Identify where control, data, and state cross boundaries; include deployment, trust, and failure domains when they explain a goal or quality result. Map the choices to the occupied capability slots and the selected Route IDs. Establish canonical domain terms and invariants when they are needed to read the implementation; use code and repository documentation to resolve contradictions.
+Show the system boundary, principal runtime or module responsibilities, dependencies, interfaces, and the reasons for the chosen split. Identify where control, data, and state cross boundaries; include deployment, trust, and failure domains when they explain a goal or quality result. Map each evidenced route to the components and conditions that realize it, including routes that share implementation. Establish canonical domain terms and invariants when they are needed to read the implementation; use code and repository documentation to resolve contradictions.
 
 ### How does a representative use produce the result?
 
@@ -71,7 +71,7 @@ Connect each decisive mechanism to a capability slot and a How much requirement 
 
 > mechanism → slot → expected quality effect → evidence or measurement gap → residual cost
 
-For distributed or persistent state that matters to this chain, identify its owner and source of truth, writers and readers, consistency and retention, and behavior under restart or failure. Distinguish configured limits from measured behavior. Compare a direct competitor's implementation only when it clarifies a route-level tradeoff on the same axes.
+For distributed or persistent state that matters to this chain, identify its owner and source of truth, writers and readers, consistency and retention, and behavior under restart or failure. Distinguish configured limits from measured behavior. Compare another solution's implementation only when it clarifies an established substitution or combination tradeoff on the same axes.
 
 ### Choose views by the question
 
@@ -101,7 +101,7 @@ The 2H analysis is complete when:
 
 - each material acceptance measure and capability-slot obligation appears in the NFR ledger;
 - targets, limits, and results have context and evidence class;
-- the reader can follow the chosen route from architecture boundaries through a representative use to the concrete code that decides its outcome;
+- the reader can follow each material realized route from architecture boundaries through a representative use to the concrete code that decides its outcome;
 - each material problem has a trace or a justified shared trace, and each core mechanism explains its contract, state, decision rule, failure behavior, and evidence;
 - relevant state, control, data, failure, trust, deployment, and extension responsibilities are explicit;
 - implementation mechanisms explain NFR results or gaps;

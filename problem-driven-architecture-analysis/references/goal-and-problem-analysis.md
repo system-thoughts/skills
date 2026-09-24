@@ -1,6 +1,6 @@
 # Goal and Problem Analysis
 
-This is the front half of Problem-Driven Architecture Analysis. Research has two passes: **project evidence → candidate goals and provisional problems → baseline → confirmed goal/problem links → solution routes → target views → logical responsibilities → capability slots → WHERE / WHAT / WHO / WHEN**. Present a problem to readers in causal order: scene and baseline pain, why its goals matter, solution routes and their changes, comparison, then the current project's WHAT/WHO/WHEN.
+This is the front half of Problem-Driven Architecture Analysis. Research has two passes: **project evidence → candidate goals and provisional problems → baseline → confirmed goal/problem links → solution routes → target views → logical responsibilities → capability slots → WHERE / WHAT / WHO / WHEN**. Present a problem to readers in causal order: scene and baseline pain, why its goals matter, solution routes and their changes, architecture comparison, then the current project's WHAT/WHO/WHEN.
 
 ## 1. Project Goal Discovery — WHY
 
@@ -35,7 +35,7 @@ Classify acceptance measures:
 - **quality constraint:** availability, durability, security, compatibility, resource ceiling;
 - **proxy metric:** a measurable signal used when the outcome itself is hard to observe.
 
-An acceptance measure tells a reader how a goal could be checked; it is not evidence that the project has achieved it. Record the observation boundary, unit, workload, environment, percentile/window, target, and source when available. Distinguish a directly measured outcome from a proxy or downstream signal. If maintainers state no target, describe the comparison or measurement needed and mark the threshold unknown. After reconstructing the baseline, revise each candidate goal's pain and measure so both refer to an actual scene.
+An acceptance measure tells a reader how a goal could be checked; it is not evidence that the project has achieved it. Record the observation boundary, unit, workload, environment, percentile/window, target, and source when available. Distinguish a directly measured outcome from a proxy or downstream signal. If maintainers state no target, describe the comparison or measurement needed and mark the threshold unknown in the ledger. After reconstructing the baseline, revise each candidate goal's pain and measure so both refer to an actual scene. In reader-facing WHY, explain the baseline action, its consequence, the affected actor, and the value of changing that consequence before discussing how to test improvement. Place measurement detail where it clarifies the claim; avoid repeating an identical unknown-threshold caveat for every goal.
 
 ### Goal coverage test
 
@@ -67,7 +67,7 @@ Maintain one problem ledger row per problem:
 |---|---|---|---|---|---|---|
 | P1 |  | G1, G2 |  |  |  | designed / implemented / extension-supported / plausible |
 
-State each problem without naming the current project or its chosen mechanism. Confirm that each mapped pain can be pointed to in the baseline and that the same responsibility slots can compare the routes. A goal may link to several problems only when each link has its own pain location and causal rationale; otherwise move it to the problem where those conditions hold or classify it as a shared quality obligation. Keep the ledger for traceability; the problem document should use its baseline story to explain the link instead of repeating the main report's goal table.
+State each problem without naming the current project or its chosen mechanism. Confirm that each mapped pain can be pointed to in the baseline and that the same responsibility slots can compare the routes. A goal may link to several problems only when each link has its own pain location and causal rationale; otherwise move it to the problem where those conditions hold or classify it as a shared quality obligation. Keep the ledger for traceability; the problem document should use its baseline story to explain the link instead of repeating the main report's goal table. Write concrete actors, requests, content, storage, and outcomes instead of shorthand that hides who does what. Format short labels consistently when they help navigation; do not make typography carry the causal explanation.
 
 ## 3. Reconstruct the baseline architecture
 
@@ -125,7 +125,7 @@ Maintain a route ledger. Its intervention point references a baseline element or
 
 Research current industry solutions for every material route. Include open-source projects, managed products, standards, and common operational workflows when they occupy the solution space. Use first-party sources for current behavior. Record rejected routes and the constraint that rejects them.
 
-The solution space is **exhaustive by responsibility** when every diagnosed pain point and capability slot has at least one considered intervention, and every route is either represented, rejected with reason, or marked unknown. Do not claim mathematical completeness.
+The solution space is **exhaustive by responsibility** when every diagnosed pain point and capability slot has at least one considered intervention, and every route is either represented, rejected with reason, or marked unknown. Do not claim mathematical completeness. Routes describe interventions, not exclusive product categories: a project may realize several routes, and one route may have several implementations. Map every evidenced capability of the analyzed project to all routes it actually realizes, noting the mechanism, enabling configuration, quality or scope limit, and evidence for each. Revisit route definitions if a real implementation repeatedly crosses their boundaries; do not omit coverage to preserve a tidy taxonomy.
 
 ## 5. Close every route with a target architecture entry
 
@@ -139,7 +139,7 @@ Create a target entry with the same Route ID for every route ledger row. The ent
 - which pain and acceptance measures the route addresses;
 - which pain remains.
 
-Give materially different structures a full target diagram. For a local change, a normalized delta from the baseline is sufficient if it explicitly names added, removed, moved, split, or merged elements and edges. Give the analyzed project's chosen route a full target view. A rejected entry records the rejecting constraint; an unknown entry records the evidence gap. The route ledger row alone is not a target entry.
+Give materially different structures a full target diagram. For a local change, a normalized delta from the baseline is sufficient if it explicitly names added, removed, moved, split, or merged elements and edges. Give every materially distinct route realized by the analyzed project enough target detail to see its intervention; a shared view can cover several routes when it shows each change explicitly. A rejected entry records the rejecting constraint; an unknown entry records the evidence gap. The route ledger row alone is not a target entry.
 
 For each viable entry, identify the baseline element or edge it intervenes at, changed control and data paths, new or shifted responsibility owner, and residual pain. Use stable visible terms across the baseline and all target views; introduce route-specific elements where they intervene and explain their new responsibility. Use element IDs in reader-facing views only if they improve navigation.
 
@@ -149,7 +149,7 @@ Check route closure with:
 |---|---|---|---|---|---|---|
 | R1 |  |  |  |  |  |  |
 
-Target views remain product-independent. Product components are mapped only after the logical responsibility model is stable.
+Route-level target views describe responsibilities without assuming that only one product can implement them. A later implementation view may name the analyzed project and its components to show where its realized routes sit in the scenario.
 
 ## 6. Build and trace the logical responsibility model
 
@@ -170,7 +170,7 @@ Use this slot schema:
 |---|---|---|---|---|---|---|---|
 | CS1 |  |  |  |  |  | control / data / both |  |
 
-The first responsibility diagram must contain no product names. Its purpose is to define the architecture coordinate system before implementation choices bias it. Present this model at the point where readers need a common coordinate for comparing solutions, and explain how its responsibilities were abstracted from the baseline and target views.
+Keep the responsibility model product-independent in the analysis so implementation choices do not define the coordinate system. Show it in the report when it helps readers distinguish solutions; otherwise retain it as a ledger or appendix and bring the consequential responsibilities into a clearer scenario comparison. The explanatory view may use functional entities, deployment boundaries, control/data paths, or another representation suited to the problem. Its job is to supplement the route target entries and make WHERE and solution relationships easier to derive, not to display every abstraction step.
 
 Trace elements in both directions:
 
@@ -180,9 +180,9 @@ Trace elements in both directions:
 
 Every baseline and viable target element maps to at least one slot. Every slot cites at least one source element; split an element or slot whose mapping hides independent responsibilities. A route-specific slot remains optional for routes that do not use it. This mapping precedes the product-component projection. Keep the full mapping in an appendix or analysis ledger when it would interrupt the comparison; surface the mappings needed to understand consequential differences.
 
-## 7. Project solutions into capability slots — WHERE
+## 7. Compare architecture locations — WHERE
 
-Create one comparison coordinate per problem. A projection table can use stable capability slots as rows and the analyzed project and relevant solutions as columns. Map concrete components into the comparison:
+Create one comparison coordinate per problem. Use the baseline and target views to show where the analyzed project and relevant solutions intervene in the original system, what control and data paths change, and which responsibilities remain external. A shared scenario view with overlays, deployment boundaries, a slot projection, or another compact comparison is appropriate when it adds information beyond the individual route entries. A projection table can use stable capability slots as rows and solutions as columns:
 
 | Capability slot | Current project | Solution A | Solution B | Operational workflow |
 |---|---|---|---|---|
@@ -196,19 +196,20 @@ Use explicit cell values:
 - **absent** when the route intentionally removes the slot;
 - **unknown** when evidence is insufficient.
 
-WHERE is the resulting set of occupied slots, layers, and handoffs. A solution can span multiple layers. Explain whether its product boundary is narrow, end-to-end, or ecosystem-composed.
+WHERE is the resulting set of occupied slots, layers, and handoffs, including all routes a product demonstrably realizes. A solution can span multiple layers and routes. Explain whether its product boundary is narrow, end-to-end, or ecosystem-composed. If the comparison view merely repeats each route's target entry, consolidate it until the reader can see the differences and resulting relationships more readily.
 
-## 8. Classify competitors from the route ledger
+## 8. Analyze solution relationships before naming competitors
 
-Competitor labels are local to a problem:
+Compare concrete, deployable candidate configurations for a stated problem, goal, workload, and constraints. First close each candidate's necessary dependencies so that a partial component is not compared with a complete solution. Keep the following judgments separate:
 
-- **Direct competitor:** follows the same technical route and competes through a different implementation, operating model, or optimization focus.
-- **Indirect competitor:** follows a different technical route to resolve the same business or operational problem.
-- **Complement or dependency:** fills a required slot without independently promising the same problem outcome.
+- **Dependency (directional prerequisite):** what must provide an input, authoritative state, integration, or runtime capability for this configuration to work? Name which candidate depends on which capability or provider.
+- **Route coverage and similarity:** which baseline responsibilities and paths does each candidate change, and how? Compare the realized intervention sets; a multi-route product has no single permanent route label.
+- **Substitutability:** can one complete candidate replace another for the stated goal and constraints, fully, partially, conditionally, or not at all?
+- **Optional combination gain:** can both run together, and does their joint use improve an outcome or cover a constraint beyond the feasible standalone choices? Coexistence or a mandatory dependency alone is not such a gain.
 
-The same product may be direct in one problem, indirect in another, and a complement in a third. State the problem ID and route ID with every label.
+These judgments are not exclusive labels. Two different-route solutions can both substitute for one another and produce additional value together. A provider may be a dependency of one configuration while a differently composed configuration using that provider is an alternative. State the compared configurations and conditions; distinguish an implementation prerequisite from a selection relationship. If substitutability is established, **direct competitor** is shorthand for a similar primary intervention mechanism and **indirect competitor** for a different one. Baseline, route, and co-deployable are descriptions, not further competitor classes.
 
-Compare direct competitors through the same capability-slot table and implementation axes. Compare indirect competitors through route-level benefits, residual pains, and shifted responsibilities rather than feature totals.
+Explain the resulting selection tradeoffs through changed paths, benefits, residual pains, ownership, and costs rather than feature totals. Present the judgments as prose, an architecture comparison, or a compact table according to reader need; a four-axis table is not mandatory.
 
 ## 9. WHAT — current-project contribution
 
@@ -273,4 +274,6 @@ Before moving to the shared 2H, verify:
 - WHAT maps only the current project;
 - WHO assigns every operational responsibility and failure handoff;
 - WHEN covers lifecycle and quantitative time obligations;
-- competitor classes follow route IDs within the same problem.
+- all evidenced routes implemented by the project are accounted for with their enabling conditions;
+- comparison candidates include their required dependencies, while route overlap, substitution, and optional combination gain remain distinct judgments;
+- any direct/indirect competitor shorthand follows an established substitution decision in the named problem.
