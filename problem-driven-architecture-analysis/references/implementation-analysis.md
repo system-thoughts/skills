@@ -35,7 +35,7 @@ Code size and file counts describe implementation footprint; they do not substit
 
 ### How much exit test
 
-How much is complete when every success criterion and slot-level quality obligation has a number, categorical requirement, or explicit measurement gap; every cited result includes context; and no configured default is presented as achieved capacity.
+How much is complete when every acceptance measure and slot-level quality obligation has a number, categorical requirement, or explicit measurement gap; every cited result includes context; and no configured default is presented as achieved capacity.
 
 ## 2. How — from architecture choices to implementation
 
@@ -87,7 +87,7 @@ For distributed or persistent state that matters to this chain, identify its own
 
 Produce two cross-checks:
 
-| Goal / success criterion | Problem | Capability slots | NFR IDs | Implementing modules | Evidence/gap |
+| Goal / acceptance measure | Problem | Capability slots | NFR IDs | Implementing modules | Evidence/gap |
 |---|---|---|---|---|---|
 
 | NFR ID | Architecture mechanism | Verification artifact | Result | Residual risk |
@@ -99,7 +99,7 @@ Use these as cross-checks; present them when they help readers follow the explan
 
 The 2H analysis is complete when:
 
-- each material success criterion and capability-slot obligation appears in the NFR ledger;
+- each material acceptance measure and capability-slot obligation appears in the NFR ledger;
 - targets, limits, and results have context and evidence class;
 - the reader can follow the chosen route from architecture boundaries through a representative use to the concrete code that decides its outcome;
 - each material problem has a trace or a justified shared trace, and each core mechanism explains its contract, state, decision rule, failure behavior, and evidence;

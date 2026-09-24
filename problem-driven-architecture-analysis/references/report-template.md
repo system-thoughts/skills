@@ -1,6 +1,6 @@
-# Durable Report Template
+# Durable Report Shape
 
-Create a report set, not one monolithic document:
+Produce a main report and one linked document for each defensible problem space:
 
 ```text
 [report-directory]/
@@ -10,191 +10,47 @@ Create a report set, not one monolithic document:
     `-- P2-[short-problem-name].md
 ```
 
-Use stable Goal, Problem, Route, logical element, Capability Slot, NFR, Claim, and Gap IDs across files. Relative links from `analysis.md` must resolve. The headings below are a report scaffold; choose the views and How subsections that explain the actual project.
+The shapes below are a reader's path, not mandatory headings or tables. Keep Goal, Problem, and Route identifiers stable where they help cross-file tracing. Element and capability-slot IDs are optional in the visible report; the same names and meanings must remain stable. Maintain the detailed goal, problem, route, slot, and claim ledgers during analysis, then disclose only the detail that helps readers understand the argument. Relative links from the main report must resolve.
 
-## Main report: `analysis.md`
+## Main report: project portfolio and shared 2H
 
-```markdown
-# [Project] Problem-Driven Architecture Analysis
+Open with the project and revision studied, research date, evidence scope, and a short synthesis of the problems, chosen routes, primary beneficiaries, and largest unproven claim.
 
-Analyzed revision: [commit / tag / branch / current checkout]
-External research date: [YYYY-MM-DD or “not performed”]
-Audience and scope: [included and excluded questions]
+Give readers a compact goal portfolio and problem index. For each goal, show the desired outcome, affected actor, acceptance measure or measurement gap, and the problem document where its baseline cause is explained. A goal linked to several problems needs a separately justified link for each. Map major public capabilities to supported goals or mark them as unexplained; this coverage can be compact or placed in an appendix. The main report need not repeat each problem document's baseline narrative or grouping explanation.
 
-## Executive synthesis
+Then explain the shared **How much** and **How**:
 
-[Problems the project demonstrably targets, chosen technical routes, cross-
-problem product position, primary beneficiaries, quantified evidence, central
-tradeoff, and most important unknown.]
+- **How much:** for each material non-functional requirement, distinguish intended target, workload and measurement boundary, implemented mechanism, observed result, and unknown. A configuration default or vendor benchmark is not a measured result for the analyzed deployment.
+- **How:** explain the architecture's responsibility split, trace representative uses through actual components and code, then deepen the decisions, state, failure handling, and quality evidence that determine outcomes. When several problems reuse implementation, a compact shared-mechanism/scenario-difference table can open this section.
 
-## 1. Project Goal Discovery — WHY
+Close with the evidence status, contradictions and resolving checks, and a conclusion at the strength of the available evidence. Link every problem document. The main report owns cross-problem implementation detail; problem documents own their individual scenario and solution comparison.
 
-| Goal ID | Desired outcome / why build | Largest pain | Affected actor | Success criterion | Evidence/confidence |
-|---|---|---|---|---|---|
+## Problem document: a causal explanation
 
-### Capability-to-goal coverage
+### 1. The scene and the original problem
 
-| Public capability | Goal IDs | Evidence | Orphan / notes |
-|---|---|---|---|
+State a recognizable trigger, relevant actors, completion boundary, and why the outcome matters. Draw the product-independent baseline from trigger to outcome. Distinguish control and data paths, authoritative sources, and ownership where they matter. Follow the diagram with a short walk-through of how its steps produce the pain and consequence; locate each important pain at a named element, relation, or handoff.
 
-## 2. Problem-space index
+Use one visible name for each architectural element throughout diagrams, tables, and prose. Explain a newly abstracted element when readers first need it: its responsibility, input/output, and difference from neighboring elements. Established industry terms can retain their usual meanings. An optional glossary is an index, not a prerequisite for reading the first diagram.
 
-| Goal ID | Baseline pain location / element | Problem ID and statement | Success criterion | Grouping rationale | Chosen Route ID | Detailed document |
-|---|---|---|---|---|---|---|
-| G1 |  | P1 — ... |  | Shared causal chain and comparable routes | R1 | [P1 details](problems/P1-name.md) |
+### 2. WHY: why these goals belong here
 
-[Use one row per Goal–Problem link, including separate pain locations when a
-goal spans problems. Explain a split when goals share a topic but require
-different baseline chains or architecture coordinates.]
+Connect each linked goal to a pain in the baseline, the affected actor, the value of improving it, and an acceptance measure. State the causal reason several goals share this problem in ordinary language. Explain a cross-problem quality obligation separately rather than letting it merge unrelated scenarios. Refer to the main portfolio instead of repeating its full goal ledger. A concise table may orient readers, but use prose or short lists when a cell would otherwise contain several causal steps.
 
-# Part II — 2H
+### 3. The solution space and its changes to the baseline
 
-## 3. How much — quantified non-functional realization
+Show the intervention possibilities derived from the pain, with known industry solutions and meaningful rejected or unknown routes. A short overview can orient readers. For each Route ID, place its target entry near its explanation: identify the baseline intervention, added/removed/moved responsibilities, changed control and data paths, new owner, addressed goals, and remaining pain. Material structural changes and the analyzed project's chosen route need a full product-independent view; local changes can use an explicit baseline delta. A rejected route needs its constraint; an unknown route needs its evidence gap. Do not substitute an overview row for this entry.
 
-| NFR ID | Goal/problem/slot | Attribute | Target/workload | Mechanism | Result and evidence class | Gap |
-|---|---|---|---|---|---|---|
+### 4. Compare the solutions
 
-[Cover relevant performance, scale, latency, availability, reliability,
-consistency, durability, resource, security, compatibility, and operability
-requirements.]
+Abstract the baseline and viable targets into product-independent responsibilities and capability slots, then map their elements to those slots. Explain why the slots form a useful comparison coordinate. Compare the analyzed project and the problem's relevant alternatives in that coordinate; show occupied, delegated, absent, and unknown responsibilities, then explain tradeoffs and selection conditions. Classify direct and indirect competitors by technical route. Keep a full element-to-slot ledger in an appendix when it would interrupt the comparison, and show the consequential mappings in the main flow.
 
-## 4. How — architecture and implementation
+### 5. The analyzed project's choice
 
-[When several problems reuse an implementation, begin with a compact table
-showing shared mechanism, reused implementation, scenario-specific entry or
-policy, and divergence point. Omit the table when reuse is not material.]
+Explain **WHAT** it delivers for this problem, what work remains with other systems, and the conditions under which it helps. Explain **WHO** benefits, adopts, operates, integrates, maintains relevant modules, sees which data, and handles incidents. Explain **WHEN** it enters the lifecycle and how ordering, deadlines, retries, retention, and recovery affect the outcome. Use diagrams, tables, or prose according to what makes these relationships easiest to follow.
 
-### Traceability
+Close with problem-specific evidence gaps and sources at the claims they support. The reader should be able to answer four questions without decoding research ledgers: What causes the problem? What solutions exist and how do they change the baseline? How do those solutions compare? What does this project contribute, for whom, and when?
 
-| Goal / success criterion | Problem | Capability slots | NFR IDs | Implementing modules | Evidence/gap |
-|---|---|---|---|---|---|
+## Delivery check
 
-### Architecture choices and concrete implementation
-
-[Choose project-specific subsections. Explain responsibility boundaries and
-dependencies first. Trace representative uses from entry to outcome, including
-branches, state changes, and code references. Deepen the mechanisms that own
-the route's decisive behavior or a material NFR: contract, state, decision
-rule, failure handling, and evidence. Choose C4, 4+1, use-case, state,
-decision, or code views only where each answers a concrete question.]
-
-### NFR realization
-
-| NFR ID | Architecture mechanism | Verification artifact | Result | Residual risk |
-|---|---|---|---|---|
-
-## 5. Evidence, contradictions, and next checks
-
-| Claim/Gap ID | Affected IDs | Claim or gap | Status/confidence | Source | Resolving check / owner |
-|---|---|---|---|---|---|
-
-## Conclusion
-
-[What problems the project is evidenced to solve, which routes and slots it
-occupies, who and when it fits, what quality is quantified, and what remains
-unproven. Avoid a universal ranking.]
-```
-
-## Per-problem document: `problems/Px-name.md`
-
-```markdown
-# [P1] [Problem statement]
-
-Goals: [G1, G2]
-Research date/version scope: [...]
-
-### Canonical logical vocabulary
-
-| Element ID | Visible term | Definition / role | Introduced in baseline or Route ID |
-|---|---|---|---|
-
-## 1. Problem and success definition — WHY
-
-| Goal ID | Baseline pain element/edge | Affected actor | Success criterion | Why grouped into this problem | Evidence |
-|---|---|---|---|---|---|
-
-## 2. Baseline architecture view
-
-[Product-independent full system chain using canonical visible terms. Put the
-line-style legend or direction cue inside the figure; verify request and
-returned-data arrow directions. Mark pain, quantities, ownership, sources of
-truth, and trust boundaries. Refer to visible terms, not diagram source IDs,
-in prose.]
-
-## 3. Solution-space view
-
-| Route ID | Baseline element/edge | Technical route | Changed responsibility/guarantee | Benefits | Costs/risks | Known solutions | Status |
-|---|---|---|---|---|---|---|---|
-
-[Include rejected and unknown routes so coverage is exhaustive by responsibility.]
-
-## 4. Target architecture views by route
-
-| Route ID | Status | Target representation / rejection / unknown gap | Baseline intervention | Changed control/data paths | Responsibility owner | Residual pain |
-|---|---|---|---|---|---|---|
-
-### [R1] [Route]
-
-[One entry for every Route ID. Use a full product-independent diagram for a
-material structural change and for the analyzed project's chosen route. For a
-local change, name the baseline elements and edges added, removed, moved,
-split, or merged. For a rejected route give the rejecting constraint; for an
-unknown route give the evidence gap. Label the intervention and any new
-route-specific elements using the canonical vocabulary.]
-
-## 5. Logical responsibility model
-
-[First diagram contains responsibility/capability names only—no product names.
-Distinguish control from data relationships.]
-
-| Slot ID | Layer | Responsibility | Consumes | Provides | Dependencies | Control/data role | NFR obligation |
-|---|---|---|---|---|---|---|---|
-
-### Baseline and target elements to slots
-
-| Baseline or Route ID | Element ID and visible term | Slot ID | Shared / optional / route-specific | Mapping rationale |
-|---|---|---|---|---|
-
-[Every baseline and viable target element has a slot; every slot has a source
-element. Route-specific slots remain optional outside that route.]
-
-## 6. Capability-slot projection — WHERE
-
-| Capability slot | Current project | Direct competitor A | Indirect competitor B | Complement/dependency |
-|---|---|---|---|---|
-
-[Use component name, external/delegated, operator-supplied, absent, or unknown.]
-
-### Competitor relationship
-
-| Solution | Route ID | Direct / indirect / complement | Why | Residual pain / shifted responsibility |
-|---|---|---|---|---|
-
-## 7. Current-project contribution — WHAT
-
-| Project capability/component | Slot | Operations / outcome | Preconditions | Boundary | Goal/evidence |
-|---|---|---|---|---|---|
-
-## 8. Participants and operating model — WHO
-
-| Participant | Value / adoption reason | Operations | Visible data | Module/data owner | Incident responsibility | Collaboration |
-|---|---|---|---|---|---|---|
-
-[Include target customer, proof needed for adoption, adoption friction, and
-non-fit customers.]
-
-## 9. Temporal specification — WHEN
-
-| Event/phase | Trigger | Preconditions | Ordering/deadline | State transition | Timeout/retry/fallback | Signal | Evidence |
-|---|---|---|---|---|---|---|---|
-
-[Include adoption timing, lifecycle timing, interaction timing, and service
-timing.]
-
-## 10. Problem-specific evidence gaps
-
-| Gap | Affected decision | Resolving check | Owner |
-|---|---|---|---|
-```
-
-The main report's executive synthesis must be reconstructible from goal, problem, route, element-to-slot, NFR, and claim traces. The problem documents own baseline/solution/target/WHERE/WHAT/WHO/WHEN detail; the main report owns How much and How. Cross-problem implementation reuse, when material, is explained at the start of How rather than in a separate architecture-position section.
+The narrative can be short or detailed, but its claims must remain traceable: each linked goal points to a baseline pain and acceptance measure; each route has a target entry; baseline and viable target elements map to slots in both directions; competing products occupy the same comparison coordinate; and the current project's boundaries, participants, temporal behavior, and implementation evidence remain explicit. Add a table or ID only when it makes that explanation easier to use.

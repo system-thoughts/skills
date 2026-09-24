@@ -1,6 +1,6 @@
 # Goal and Problem Analysis
 
-This is the front half of Problem-Driven Architecture Analysis. Preserve the dependency order: **project goals → problem spaces → baseline → solution routes → target views → logical responsibilities → capability slots → WHERE / WHAT / WHO / WHEN**.
+This is the front half of Problem-Driven Architecture Analysis. Research has two passes: **project evidence → candidate goals and provisional problems → baseline → confirmed goal/problem links → solution routes → target views → logical responsibilities → capability slots → WHERE / WHAT / WHO / WHEN**. Present a problem to readers in causal order: scene and baseline pain, why its goals matter, solution routes and their changes, comparison, then the current project's WHAT/WHO/WHEN.
 
 ## 1. Project Goal Discovery — WHY
 
@@ -12,9 +12,9 @@ Begin with the analyzed project, not a preselected market category. Discover goa
 - adopter stories, operational guidance, and repeated user requests;
 - history that explains why a subsystem was introduced or changed.
 
-Maintain a goal ledger:
+Maintain an analysis ledger; the main report can show a compact portfolio rather than copying the whole ledger:
 
-| Goal ID | Project goal | Largest pain | Affected actor | Success criterion | Status | Evidence |
+| Goal ID | Project goal | Largest pain | Affected actor | Acceptance measure / target | Status | Evidence |
 |---|---|---|---|---|---|---|
 | G1 |  |  |  |  | observed / stated / inferred / unknown |  |
 
@@ -22,30 +22,30 @@ For each candidate goal answer:
 
 1. Why build or change this system?
 2. What business or operational pain is large enough to justify it?
-3. What observable outcome would prove that pain was solved?
+3. What observation would show improvement, and what target (if any) defines sufficient improvement?
 4. Which public capabilities exist to achieve this goal?
 5. Which evidence establishes intent, implementation, and outcome separately?
 
-Split goals when their desired outcomes, pains, or success measures differ; merge wording variants of the same outcome. A goal states an observable improvement for an actor. A mechanism states how a system might achieve it; classify the mechanism as a route or capability unless evidence establishes a distinct outcome. Classify concerns shared by several problems from their evidenced outcomes and responsibilities: they may be goals, quality constraints, or enabling capabilities. Keep that classification open when evidence is insufficient.
+Split goals when their desired outcomes, pains, or acceptance measures differ; merge wording variants of the same outcome. A goal states an observable improvement for an actor. A mechanism states how a system might achieve it; classify the mechanism as a route or capability unless evidence establishes a distinct outcome. Classify concerns shared by several problems from their evidenced outcomes and responsibilities: they may be goals, quality constraints, or enabling capabilities. Keep that classification open when evidence is insufficient.
 
-Classify success criteria:
+Classify acceptance measures:
 
 - **business outcome:** cost, adoption, revenue, time-to-market, risk, user experience;
 - **operational outcome:** latency, throughput, source load, recovery, operator effort;
 - **quality constraint:** availability, durability, security, compatibility, resource ceiling;
 - **proxy metric:** a measurable signal used when the outcome itself is hard to observe.
 
-Record the target, unit, workload, environment, percentile/window, and source when available. A metric without this context is incomplete. If maintainers state no measurable target, define the measurement needed and mark the threshold unknown.
+An acceptance measure tells a reader how a goal could be checked; it is not evidence that the project has achieved it. Record the observation boundary, unit, workload, environment, percentile/window, target, and source when available. Distinguish a directly measured outcome from a proxy or downstream signal. If maintainers state no target, describe the comparison or measurement needed and mark the threshold unknown. After reconstructing the baseline, revise each candidate goal's pain and measure so both refer to an actual scene.
 
 ### Goal coverage test
 
 Create a capability-to-goal matrix. Every major public capability must map to one or more goals. Mark capabilities with no defensible goal as **orphan capabilities**; they may be legacy, enabling infrastructure, or evidence of a missing goal. Do not invent motivation to close the matrix.
 
-Goal discovery is complete when goals are non-duplicative, each has a pain and a success criterion or explicit gap, and every major public capability is mapped or orphaned.
+Goal discovery is complete when goals are non-duplicative, each has a baseline-grounded pain and an acceptance measure or explicit gap, and every major public capability is mapped or orphaned.
 
 ## 2. Cluster goals into problem spaces
 
-A problem space is the causal baseline chain that gives rise to one or more goals' pains. Goals with different metrics may share a problem when their pains occur in that chain and their technical routes can be compared in one architecture coordinate system. A shared topic or customer label alone is insufficient. Start with provisional groups, then confirm or split them after reconstructing the baseline. Keep separate documents when goals require different:
+A problem space is the causal baseline chain that gives rise to one or more goals' pains. Confirm goal attribution with two questions: where on this baseline does the pain arise, and could an intervention there plausibly change the desired outcome? Group several goals only if they share that causal chain **and** their technical routes can be compared in one architecture coordinate system. A shared topic or customer label alone is insufficient. Start with provisional groups, then confirm or split them after reconstructing the baseline. Keep separate documents when goals require different:
 
 - baselines or sources of pain;
 - responsibility models;
@@ -53,9 +53,11 @@ A problem space is the causal baseline chain that gives rise to one or more goal
 - competitor sets;
 - ownership or temporal models that change the solution space.
 
+Common causal relationships help explain a valid grouping: one bottleneck produces several outcomes; different handoffs on one end-to-end chain transmit the same problem; or the same chain recurs across a different time window. These are explanation patterns, not sufficient conditions or a mandatory taxonomy to print. A quality obligation spanning problems attaches to each relevant chain but does not merge the problems. Write the actual causal explanation in ordinary prose, naming the baseline steps and affected outcomes; a reason code alone does not explain it.
+
 Maintain the goal-to-problem trace and grouping rationale:
 
-| Goal ID | Baseline pain location / element ID | Problem ID | Success criterion | Why this problem groups the goal | Evidence |
+| Goal ID | Baseline pain location / element | Problem ID | Acceptance measure / target | Causal reason for grouping | Evidence |
 |---|---|---|---|---|---|
 | G1 |  | P1 |  | Shared causal chain and comparable routes |  |
 
@@ -65,7 +67,7 @@ Maintain one problem ledger row per problem:
 |---|---|---|---|---|---|---|
 | P1 |  | G1, G2 |  |  |  | designed / implemented / extension-supported / plausible |
 
-State each problem without naming the current project or its chosen mechanism. Confirm that each mapped pain can be pointed to in the baseline and that the same responsibility slots can compare the routes. A goal may link to several problems only when each link has its own pain location and causal rationale; otherwise move it to the problem where those conditions hold or classify it as a shared quality obligation.
+State each problem without naming the current project or its chosen mechanism. Confirm that each mapped pain can be pointed to in the baseline and that the same responsibility slots can compare the routes. A goal may link to several problems only when each link has its own pain location and causal rationale; otherwise move it to the problem where those conditions hold or classify it as a shared quality obligation. Keep the ledger for traceability; the problem document should use its baseline story to explain the link instead of repeating the main report's goal table.
 
 ## 3. Reconstruct the baseline architecture
 
@@ -80,7 +82,7 @@ The baseline is the complete system chain before the analyzed solution intervene
 7. feedback, monitoring, and recovery;
 8. organizational ownership and trust boundaries.
 
-Before drawing, establish a per-problem vocabulary of logical elements: stable element ID, visible name, definition, and role. Reuse the same visible name and meaning in baseline, solution-space references, target views, and the logical responsibility model. Add a new element only when a route adds a new responsibility; do not force different problem spaces to share a vocabulary.
+Before drawing, identify the logical elements and what each name denotes. Reuse the same visible name and meaning in baseline, solution-space descriptions, target views, tables, and prose. When an element is an analytical abstraction, explain its responsibility, input/output, and distinction from adjacent elements at its first useful appearance. Established industry terms need explanation when the report uses them in a local or unusual sense. Track IDs or a glossary internally when they improve traceability; include them in the reader's document only when they help comprehension. Add a new element when a route adds a responsibility, and explain any split or merge of existing responsibilities.
 
 Draw control relationships and data relationships with different edge styles or separate views. Put the line-style legend or direction cue inside the figure when it can be expressed there. Treat diagram IDs as source-only identifiers: refer to visible element names in explanatory prose. Verify the direction of each request, command, response, and data transfer separately. Mark where latency, cost, failure probability, inconsistency, manual coordination, or risk accumulates. Quantify the bottleneck when evidence exists.
 
@@ -115,7 +117,7 @@ Search these intervention families where relevant:
 
 These are search prompts, not a fixed taxonomy. Derive the actual technical routes from the problem's responsibilities and constraints.
 
-Maintain a route ledger. Its intervention point references a baseline element or edge, and its status determines the required target entry:
+Maintain a route ledger. Its intervention point references a baseline element or edge, and its status determines the required target entry. In the report, a concise route overview or another readable introduction can orient the reader; explain each route's mechanism and target change together instead of repeating several wide ledger tables:
 
 | Route ID | Baseline element/edge | Technical route | Changed responsibility/guarantee | Benefits | Costs/risks | Known solutions | Status |
 |---|---|---|---|---|---|---|---|
@@ -127,19 +129,19 @@ The solution space is **exhaustive by responsibility** when every diagnosed pain
 
 ## 5. Close every route with a target architecture entry
 
-Create a target entry with the same Route ID for every route ledger row. For a viable route, show how the baseline changes:
+Create a target entry with the same Route ID for every route ledger row. The entry may sit beside that route's explanation rather than in a separate chapter. For a viable route, show how the baseline changes:
 
 - responsibilities added, removed, moved, split, or merged;
 - new control and data paths;
 - source of truth and cache ownership;
 - trust and failure boundaries;
 - new dependencies and operational owners;
-- which pain and success criteria the route addresses;
+- which pain and acceptance measures the route addresses;
 - which pain remains.
 
 Give materially different structures a full target diagram. For a local change, a normalized delta from the baseline is sufficient if it explicitly names added, removed, moved, split, or merged elements and edges. Give the analyzed project's chosen route a full target view. A rejected entry records the rejecting constraint; an unknown entry records the evidence gap. The route ledger row alone is not a target entry.
 
-For each viable entry, identify the baseline element or edge it intervenes at, changed control and data paths, new or shifted responsibility owner, and residual pain. Use stable visible terms and element IDs across the baseline and all target views; label route-specific elements and the route's intervention location in the view.
+For each viable entry, identify the baseline element or edge it intervenes at, changed control and data paths, new or shifted responsibility owner, and residual pain. Use stable visible terms across the baseline and all target views; introduce route-specific elements where they intervene and explain their new responsibility. Use element IDs in reader-facing views only if they improve navigation.
 
 Check route closure with:
 
@@ -168,7 +170,7 @@ Use this slot schema:
 |---|---|---|---|---|---|---|---|
 | CS1 |  |  |  |  |  | control / data / both |  |
 
-The first responsibility diagram must contain no product names. Its purpose is to define the architecture coordinate system before implementation choices bias it.
+The first responsibility diagram must contain no product names. Its purpose is to define the architecture coordinate system before implementation choices bias it. Present this model at the point where readers need a common coordinate for comparing solutions, and explain how its responsibilities were abstracted from the baseline and target views.
 
 Trace elements in both directions:
 
@@ -176,11 +178,11 @@ Trace elements in both directions:
 |---|---|---|---|---|
 | Baseline |  | CS1 |  |  |
 
-Every baseline and viable target element maps to at least one slot. Every slot cites at least one source element; split an element or slot whose mapping hides independent responsibilities. A route-specific slot remains optional for routes that do not use it. This mapping precedes the product-component projection.
+Every baseline and viable target element maps to at least one slot. Every slot cites at least one source element; split an element or slot whose mapping hides independent responsibilities. A route-specific slot remains optional for routes that do not use it. This mapping precedes the product-component projection. Keep the full mapping in an appendix or analysis ledger when it would interrupt the comparison; surface the mappings needed to understand consequential differences.
 
 ## 7. Project solutions into capability slots — WHERE
 
-Create one projection table per problem. Rows are the stable capability slots; columns are the analyzed project and that problem's solutions. Map concrete components into cells:
+Create one comparison coordinate per problem. A projection table can use stable capability slots as rows and the analyzed project and relevant solutions as columns. Map concrete components into the comparison:
 
 | Capability slot | Current project | Solution A | Solution B | Operational workflow |
 |---|---|---|---|---|
@@ -219,7 +221,7 @@ For each problem, focus on what the analyzed project contributes:
 - explicit exclusions, structural exclusions, operational limits, and unobserved cases;
 - extension seams and the boundary between implemented and merely extensible.
 
-Connect each capability to a Goal ID and success criterion. The WHAT boundary is complete when a reader can tell what work the project removes from users, what work remains, and where another solution is required.
+Connect each capability to a Goal ID and acceptance measure. The WHAT boundary is complete when a reader can tell what work the project removes from users, what work remains, and where another solution is required.
 
 ## 10. WHO — customer, collaborators, ownership, and operations
 
@@ -261,7 +263,7 @@ Separate configured values, hard-coded limits, documented guarantees, measured b
 Before moving to the shared 2H, verify:
 
 - project goals explain why each problem document exists;
-- each Goal ID maps through a named baseline pain location to its Problem ID(s) and success criterion, with a rationale for each grouping or shared obligation;
+- each Goal ID maps through a named baseline pain location to its Problem ID(s) and acceptance measure, with a rationale for each grouping or shared obligation;
 - baseline and target views use the same per-problem visible terms and correct edge directions;
 - routes intervene at an identified baseline responsibility or dependency;
 - every Route ID has a corresponding target entry, rejection reason, or unknown gap;

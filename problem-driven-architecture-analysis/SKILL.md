@@ -5,11 +5,11 @@ description: "Analyze an existing software project through Problem-Driven Archit
 
 # Problem-Driven Architecture Analysis
 
-Start from the project and reason backward to the problems it exists to solve. A goal names an observable outcome; a problem names the causal system chain that prevents it. Keep goals distinct, then group them only when their pains occur in the same baseline chain and their solution routes can be compared in one architecture coordinate system. Goals in one problem may have different success measures.
+Start from the project and reason backward to the problems it exists to solve. A goal names an observable outcome; a problem names the causal system chain that prevents it. Discover candidate goals first, reconstruct the baseline, then confirm each goal's pain location and problem grouping. Goals in one problem may have different success measures.
 
 Keep four linked ledgers:
 
-- **goal ledger:** project goals, business pain, success criteria, evidence;
+- **goal ledger:** project goals, business pain, acceptance measures or targets, evidence;
 - **problem ledger:** problem spaces, baseline pain locations, linked goals, and the reason each grouping shares one architecture coordinate system;
 - **capability-slot ledger:** product-independent responsibilities and dependencies;
 - **claim ledger:** claim status, confidence, source, contradiction, and next check.
@@ -29,27 +29,26 @@ Identify the repository, revision, research date, audience, and deliverable. Sep
 
 ## 2. Discover project goals — WHY
 
-Follow the goal-discovery method in [references/goal-and-problem-analysis.md](references/goal-and-problem-analysis.md). For every distinct project goal answer:
+Follow the goal-discovery method in [references/goal-and-problem-analysis.md](references/goal-and-problem-analysis.md). For every candidate project goal answer:
 
 - Why build or change this system?
 - What is the largest business or operational pain?
-- What observable outcome would prove the pain was solved?
+- What observable outcome would show that the pain has improved?
 
-Trace every major public capability to at least one goal. Keep unsupported motivation as inferred or unknown; keep a capability with no defensible goal as an orphan rather than inventing a story.
+Trace every major public capability to at least one goal. After drawing the baseline, revisit the candidates: point to the causal pain, revise or split goals that do not fit, and state how the result would be measured. A measurement plan is not evidence of achieved success; mark an unstated target or threshold unknown. Keep unsupported motivation as inferred or unknown; keep a capability with no defensible goal as an orphan rather than inventing a story.
 
-**Complete when:** goals are non-duplicative, each has a pain and success criterion or an explicit evidence gap, and every major capability is accounted for.
+**Complete when:** goals are non-duplicative, each has a baseline-grounded pain and an observable acceptance measure or explicit gap, and every major capability is accounted for.
 
 ## 3. Build one problem document per problem space
 
-Cluster goals by their causal baseline chain and comparable solution space, not by topic label. Trace each Goal ID through its baseline pain location to a Problem ID and success criterion; state why grouped goals belong together. Revisit provisional groups after reconstructing the baseline. For each problem, produce these artifacts in dependency order:
+Link a goal to a problem only when its pain can be located on that problem's baseline and an intervention there could plausibly improve the goal. Group several goals only when they share a causal baseline chain **and** their solution routes can be compared in one architecture coordinate system; a shared topic or customer is insufficient. Explain the specific causal relationship in ordinary prose. A cross-problem quality obligation may apply to several problem documents without merging their problems.
 
-1. **canonical vocabulary and baseline architecture view:** stable logical element names and IDs, the complete system chain, and located pains;
-2. **solution-space view:** first-principles intervention routes plus known industry solutions;
-3. **target architecture entries:** one entry for every Route ID, showing how that route changes the baseline or why it is rejected or unknown;
-4. **logical responsibility model:** product-free capabilities derived from the baseline and viable target views, with control and data relations distinguished;
-5. **element-to-slot mapping:** trace baseline and target-view elements into shared, optional, or route-specific capability slots;
-6. **capability-slot projection and WHERE:** map the current project and problem-specific competitors into those slots and identify their occupied layers and handoffs;
-7. **WHAT, WHO, WHEN:** what this project contributes, the participant/ownership model, and its temporal specification.
+Research artifacts need not become a sequence of tables in the reader's document. Build each problem document around four connected questions:
+
+1. **What is the problem?** Establish the concrete scene, reconstruct the product-independent baseline from trigger to outcome, explain how pain arises there, then ground each linked goal and its acceptance measure in that chain.
+2. **What solutions exist?** Derive intervention routes from the baseline, name known solutions, and give every route a target architecture entry that explains its change or its rejection/uncertainty.
+3. **How do solutions compare?** Derive product-independent responsibilities and capability slots from the baseline and viable targets, trace elements to slots, then compare the current project and problem-specific alternatives in one coordinate system.
+4. **What does this project contribute?** Explain WHAT, WHO, and WHEN for its chosen route, including boundaries, beneficiaries, collaborators, owners, and temporal behavior.
 
 Classify competitors only within a named problem:
 
@@ -57,9 +56,9 @@ Classify competitors only within a named problem:
 - **indirect competitor:** a solution following a different technical route to the same problem;
 - **complement or dependency:** participates in the target architecture without competing for the same problem outcome.
 
-Keep the same visible term for an element across a problem's diagrams; use diagram identifiers only in source, and put line-style legends and direction cues inside the figure. Check that request/control and returned-data arrows point in their actual directions. A route table row alone does not satisfy its target entry: a material structural change needs a full view, a local change needs an explicit baseline delta, and a rejected or unknown route needs its reason or evidence gap. Every viable target entry identifies the baseline intervention, changed control/data paths, responsibility owner, and residual pain.
+Keep one visible name and one meaning for each architectural element across a problem's diagrams, tables, and prose. Explain a newly abstracted element when the reader first needs it: its responsibility, input/output, and distinction from adjacent elements. Use established industry terms in their usual sense; explain local deviations. Element IDs and a glossary are optional aids to traceability, not mandatory diagram labels or opening sections. Put line-style legends and direction cues inside figures when useful, and check that request/control and returned-data arrows point in their actual directions. A route overview row alone does not satisfy its target entry: a material structural change needs a full view, a local change needs an explicit baseline delta, and a rejected or unknown route needs its reason or evidence gap. Every viable target entry identifies the baseline intervention, changed control/data paths, responsibility owner, and residual pain.
 
-**Complete when:** every Goal ID has a defensible problem linkage and pain location, including an explicit rationale when one goal spans problems; every Route ID has a matching target entry; each baseline and viable target element maps to a capability slot and each slot has a source element; every competitor has a route-derived relationship; and every concrete component maps to a product-independent slot.
+**Complete when:** a reader can follow the baseline pain to each linked goal, understand the available routes and their changes, compare solutions, and explain the current project's contribution without first decoding ledgers or IDs. Every goal linkage still has a defensible pain location; every route has a target entry; baseline and viable target elements trace to capability slots in both directions; competitor relationships follow routes; and concrete components map to product-independent slots.
 
 ## 4. Analyze the shared 2H
 
@@ -86,11 +85,12 @@ The main report links every problem document and summarizes the goal portfolio, 
 The analysis is complete when:
 
 - every major project capability maps to a supported goal or an explicit orphan;
-- every goal-to-problem grouping follows a shared causal baseline chain and architecture coordinate system, with its grouping rationale recorded;
-- each problem has a consistent vocabulary, baseline chain, exhaustive-by-responsibility solution space, one target entry per route, and a product-free logical responsibility model;
+- every goal-to-problem grouping follows a shared causal baseline chain and architecture coordinate system, with its specific causal rationale explained in readable prose;
+- each problem has consistent names for architectural elements, a baseline chain, exhaustive-by-responsibility solution space, one target entry per route, and a product-free logical responsibility model;
 - baseline and viable target elements trace to capability slots in both directions;
-- capability-slot tables place the project and problem-specific competitors in one architecture coordinate system;
+- a capability-slot comparison places the project and problem-specific competitors in one architecture coordinate system;
 - direct and indirect competitor labels follow technical routes within that problem;
 - WHAT, WHO, and WHEN are answered inside each problem document, including operations, data visibility, module ownership, and incident ownership;
 - the main report links all problem documents and contains evidence-backed How much followed by How that explains both architecture choices and the decisive component mechanisms in code;
-- every material conclusion is traceable through the ledgers to repository or current external evidence.
+- every material conclusion is traceable through the ledgers to repository or current external evidence;
+- the problem document reads as an explanation of problem, solutions, comparison, and current-project fit, rather than a display of the ledgers used to research it.
