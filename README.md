@@ -14,54 +14,53 @@
 
 Skill 使用 `SKILL.md` 中的 `name`、`description` 和 Markdown 指令作为通用主体。`agents/openai.yaml` 是 Codex / OpenAI 插件界面的可选展示元数据；其他 Agent 可以忽略它，不影响 Skill 主体和 `references/` 的使用。
 
-## 📦 安装位置
+## 📦 安装、更新与卸载
 
-| Agent | 项目级目录 | 用户级目录 |
-| --- | --- | --- |
-| Pi | `.agents/skills/`（也支持 `.pi/skills/`） | `~/.agents/skills/`（也支持 `~/.pi/agent/skills/`） |
-| Codex | `.agents/skills/` | `~/.agents/skills/` 或 `~/.codex/skills/` |
-| Claude Code | `.claude/skills/` | `~/.claude/skills/` |
-| OpenCode | `.agents/skills/`（也支持 `.opencode/skills/`） | `~/.agents/skills/`（也支持 `~/.config/opencode/skills/`） |
+推荐使用 Vercel 的 [`skills` CLI](https://github.com/vercel-labs/skills)，通过 `npx` 运行，无需全局安装。需要本机已有 Node.js 和 npm。命令中的仓库地址为 `system-thoughts/skills`，Agent 名称使用 CLI 的标识：`pi`、`codex`、`claude-code`、`opencode`。
 
-Pi、Codex 和 OpenCode 可以直接共用 `.agents/skills/`。Claude Code 使用 `.claude/skills/`；同一个 Skill 目录完整复制过去即可。项目级安装只对当前仓库生效，用户级安装可跨项目使用。
+### 安装
 
-## 🚀 安装
-
-以下命令在本仓库根目录执行。将 `DEST` 改为上表中对应 Agent 的目录；例如 Pi、Codex、OpenCode 的项目级安装用 `.agents/skills`，Claude Code 用 `.claude/skills`。用户级安装时可将它设为 `$HOME/.agents/skills`、`$HOME/.claude/skills` 等对应目录。
+在要安装到的项目根目录执行。下面命令会把本仓库当前所有 Skill 安装到四种 Agent；新收录 Skill 后，再运行一次安装命令即可补装：
 
 ```sh
-SKILL=problem-driven-architecture-analysis
-DEST=.agents/skills
-mkdir -p "$DEST/$SKILL"
-cp -a "$SKILL/." "$DEST/$SKILL/"
+npx skills add system-thoughts/skills \
+  --skill '*' \
+  --agent pi --agent codex --agent claude-code --agent opencode \
+  --yes
 ```
 
-安装其他 Skill 时，把 `SKILL` 改成对应目录名。请复制整个目录，这样 `references/` 等相对路径资源会一并保留。
-
-## 🔄 更新
-
-先更新本仓库的源文件，再将 Skill 同步到安装位置：
+加 `--global` 可安装到用户级目录，供多个项目使用：
 
 ```sh
-git pull
-SKILL=problem-driven-architecture-analysis
-DEST=.agents/skills
-rsync -a --delete "$SKILL/" "$DEST/$SKILL/"
+npx skills add system-thoughts/skills \
+  --skill '*' \
+  --agent pi --agent codex --agent claude-code --agent opencode \
+  --global --yes
 ```
 
-`rsync -a --delete` 会让安装副本与仓库版本一致，也会清除该 Skill 安装目录内已从源版本移除的文件。仓库中的副本和本机安装副本是分开的；更新仓库不会自动更新已安装的 Skill。若没有 `rsync`，删除该 Skill 的安装目录后，按上面的安装步骤重新复制。
+安装器会为所选 Agent 设置对应的 Skill 目录；若希望复制文件而不使用符号链接，可加 `--copy`。项目级安装随项目共享；用户级安装对当前用户生效。
 
-## 🧹 卸载
+### 更新
 
-卸载单个 Skill 时，删除对应 Agent 目录下的同名子目录即可：
+在安装时所用的相同范围内执行。项目级安装在项目根目录运行；用户级安装加 `--global`：
 
 ```sh
-SKILL=problem-driven-architecture-analysis
-DEST=.agents/skills
-rm -rf "$DEST/$SKILL"
+npx skills update --yes
+npx skills update --global --yes
 ```
 
-卸载项目级副本不会影响用户级副本，反之亦然。请确认 `DEST` 指向 Skill 安装目录后再执行删除命令。
+更新命令会更新已安装的 Skill。它不会自动安装之后才新增的 Skill；新增 Skill 时重新运行上方的安装命令。
+
+### 卸载
+
+卸载指定 Skill。项目级安装在项目根目录运行；用户级安装加 `--global`：
+
+```sh
+npx skills remove problem-driven-architecture-analysis --yes
+npx skills remove problem-driven-architecture-analysis --global --yes
+```
+
+先运行 `npx skills list` 可查看当前已安装的名称。若要卸载多个 Skill，在命令中列出多个名称；卸载时不要使用 `--all`，因为它会移除该范围内安装的所有 Skill，不限于本仓库。
 
 ## 📚 Agent Skills 目录说明
 
